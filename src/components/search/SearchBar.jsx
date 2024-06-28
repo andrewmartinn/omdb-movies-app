@@ -41,7 +41,12 @@ const SearchBar = () => {
               fontSize={{ base: "sm", md: "lg" }}
             />
             <InputRightElement>
-              <IconButton mr={"2"} height={"70%"} icon={<Search2Icon />} />
+              <IconButton
+                mr={"2"}
+                height={"70%"}
+                icon={<Search2Icon />}
+                onClick={handleSubmit}
+              />
             </InputRightElement>
           </InputGroup>
         </form>
