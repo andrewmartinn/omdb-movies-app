@@ -25,11 +25,11 @@ const SearchBar = () => {
     <Container centerContent>
       <VStack w={"100%"} gap={"4"}>
         <Heading>OMDB Movies</Heading>
-        <Text>Search for movies</Text>
+        <Text>Search for movies and series</Text>
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
           <InputGroup size={"lg"} onSubmit={handleSubmit}>
             <Input
-              placeholder="Search movies..."
+              placeholder="Enter movie or series name..."
               borderRadius={"lg"}
               focusBorderColor={useColorModeValue("#EEE", "#333")}
               _focus={{
@@ -38,6 +38,7 @@ const SearchBar = () => {
               border={`1px solid ${useColorModeValue("#EEE", "#333")}`}
               value={text}
               onChange={(e) => setText(e.target.value)}
+              fontSize={{ base: "sm", md: "lg" }}
             />
             <InputRightElement>
               <IconButton mr={"2"} height={"70%"} icon={<Search2Icon />} />
