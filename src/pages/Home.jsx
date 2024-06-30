@@ -1,3 +1,5 @@
+import { AbsoluteCenter, Text } from "@chakra-ui/react";
+import Loading from "../components/common/Loading";
 import MoviesGrid from "../components/movies/MoviesGrid";
 import Pagination from "../components/pagination/Pagination";
 import SearchBar from "../components/search/SearchBar";
@@ -43,6 +45,14 @@ const Home = () => {
   return (
     <RootLayout>
       <SearchBar setSearchTerm={setSearchTerm} />
+      {loading && <Loading />}
+      {error && (
+        <AbsoluteCenter>
+          <Text fontWeight={"bold"} fontSize={"xl"}>
+            Error fetching movies!
+          </Text>
+        </AbsoluteCenter>
+      )}
       {!loading && !error && movies.length > 0 && (
         <>
           <MoviesGrid movies={movies} />
@@ -52,6 +62,13 @@ const Home = () => {
             setCurrentPage={setCurrentPage}
           />
         </>
+      )}
+      {!loading && !error && movies.length === 0 && (
+        <AbsoluteCenter>
+          <Text fontWeight={"bold"} fontSize={"xl"}>
+            No movies found!
+          </Text>
+        </AbsoluteCenter>
       )}
     </RootLayout>
   );
