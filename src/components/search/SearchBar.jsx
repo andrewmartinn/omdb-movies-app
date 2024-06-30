@@ -12,12 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-const SearchBar = () => {
+const SearchBar = ({ setSearchTerm }) => {
   const [text, setText] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text) {
-      console.log(text);
+      setSearchTerm(text);
       setText("");
     }
   };

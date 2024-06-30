@@ -6,34 +6,53 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("Batman");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
   useEffect(() => {
     const fetchMoviesData = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_BASE_URL}?apikey=${
-          import.meta.env.VITE_APP_API_KEY
-        }&s=Batman&page=${currentPage}`
-      );
-      const data = await response.json();
-      console.log(data);
-      setMovies(data.Search);
-      setTotalResults(data.totalResults);
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_APP_API_BASE_URL}?apikey=${
+            import.meta.env.VITE_APP_API_KEY
+          }&s=${searchTerm}&page=${currentPage}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data!");
+        }
+        const data = await response.json();
+        if (data.Response === "False") {
+          throw new Error(data.Error);
+        }
+        console.log(data);
+        setMovies(data.Search);
+        setTotalResults(data.totalResults);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setError(error.message);
+      }
     };
 
     fetchMoviesData();
-  }, [currentPage]);
+  }, [currentPage, searchTerm]);
 
   return (
     <RootLayout>
-      <SearchBar />
-      {movies && <MoviesGrid movies={movies} />}
-      <Pagination
-        totalResultsCount={totalResults}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <SearchBar setSearchTerm={setSearchTerm} />
+      {!loading && !error && movies.length > 0 && (
+        <>
+          <MoviesGrid movies={movies} />
+          <Pagination
+            totalResultsCount={totalResults}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      )}
     </RootLayout>
   );
 };
