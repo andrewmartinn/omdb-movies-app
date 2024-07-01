@@ -1,6 +1,23 @@
-import { Box, Card, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  Image,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
+import movieStore from "../../store/movieStore";
+import { FaHeart } from "react-icons/fa";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = observer(({ movie }) => {
+  const handleLikeMovie = (movie) => {
+    if (movieStore.isMovieLiked(movie.imdbID)) {
+      movieStore.removeMovie(movie);
+    } else {
+      movieStore.addMovie(movie);
+    }
+  };
   return (
     <Card
       boxShadow={0}
@@ -12,6 +29,10 @@ const MovieCard = ({ movie }) => {
       _hover={{
         boxShadow: "xl",
         transition: "box-shadow 0.3s ease-in-out",
+        ".like-btn": {
+          opacity: 1,
+          transition: "opacity 0.3s ease-in-out",
+        },
       }}
     >
       <Image
@@ -34,8 +55,8 @@ const MovieCard = ({ movie }) => {
           textTransform={"uppercase"}
           fontWeight={"bold"}
           fontSize={"9px"}
-          bg={"white"}
-          color={"#444"}
+          bg={useColorModeValue("#f4f4f4", "#2D3748")}
+          color={useColorModeValue("#444", "white")}
           px={"2"}
           py={"1"}
           borderRadius={"lg"}
@@ -45,8 +66,23 @@ const MovieCard = ({ movie }) => {
         >
           {movie.Type}
         </Text>
+        <Button
+          className="like-btn"
+          opacity={0}
+          position={"absolute"}
+          size={"sm"}
+          top={"2"}
+          left={"2"}
+          onClick={() => handleLikeMovie(movie)}
+          bg={useColorModeValue("#f4f4f4", "#2D3748")}
+          _hover={{ bg: useColorModeValue("#f4f4f4", "#2D3748") }}
+        >
+          <FaHeart
+            color={movieStore.isMovieLiked(movie.imdbID) ? "tomato" : "gray"}
+          />
+        </Button>
       </Box>
     </Card>
   );
-};
+});
 export default MovieCard;

@@ -7,10 +7,16 @@ import {
   Switch,
   useColorMode,
   Link as ChakraLink,
+  Button,
+  Circle,
+  Center,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
+import { observer } from "mobx-react-lite";
+import movieStore from "../../store/movieStore";
 
-const Navbar = () => {
+const Navbar = observer(() => {
   const { toggleColorMode } = useColorMode();
   return (
     <Box>
@@ -40,6 +46,22 @@ const Navbar = () => {
           >
             About
           </ChakraLink>
+          <Box position={"relative"}>
+            <Button as={Link} to={"/likes"} size={"md"}>
+              <FaHeart size={"16px"} />
+            </Button>
+            <Circle
+              position={"absolute"}
+              top={"-1"}
+              right={"-1"}
+              size="20px"
+              fontSize={"13px"}
+              bg="tomato"
+              color="white"
+            >
+              <Center>{movieStore.getLikedMoviesCount()}</Center>
+            </Circle>
+          </Box>
           <Flex alignItems={"center"} gap={"1rem"}>
             <MoonIcon />
             <Switch onChange={toggleColorMode} />
@@ -49,5 +71,5 @@ const Navbar = () => {
       </Container>
     </Box>
   );
-};
+});
 export default Navbar;
