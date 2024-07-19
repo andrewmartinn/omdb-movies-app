@@ -1,5 +1,14 @@
 # OMDB Movies App
 
+![omdb-home](https://github.com/user-attachments/assets/1c30337a-5438-4534-96ed-24b09aa5eca8)
+Homepage
+
+![omdb-likes](https://github.com/user-attachments/assets/4f34d1fd-5a29-4ce4-8828-93f53d95b7de)
+Likes Page
+
+![omdb-light](https://github.com/user-attachments/assets/8532e52d-4b37-40c4-a65e-2fc7aec49961)
+Light Theme
+
 React Application to showcase movies data from OMDB movies API. Users view information on thier favourite movies. Additonality users can search and like thier favourite movie and keep track of thier liked movies.
 
 ## Technologies Used
@@ -18,10 +27,13 @@ React Application to showcase movies data from OMDB movies API. Users view infor
 - **Favorite Movies:** Ability to mark and save favorite movies.
 - **Dark/Light Mode Toggle:** Ability to toggle between dark and light theme modes.
 - **Sorting Movies:** Sorting movies results according to thier release year or title.
+- **Pagination:** Implemented pagination for efficiently navigating through multiple pages.
 
 ## Project Outcomes
 
 - **Responsive Design:** Ensured the application UI is consistent and responsive across different screen sizes.
+
+- **Dynamic Pagination:** Implemented dynamic pagination component to ensure the results are refetched according to the current page number to display the updated movie results.
 
 - **Third-Party API Integration:** Successfully interacted with the official OMDB API to fetch and display movies data dynamically based on user queries and preferences.
 
@@ -46,10 +58,10 @@ To get started you need to:
 yarn install
 ```
 
-### Create an enviroment file to store GIPHY API Key and base API url
+### Create an enviroment file to store OMDB API Key and base API url
 
 ```
-VITE_APP_OMDB_API_KEY=your-api-key-here
+VITE_APP_API_KEY=your-api-key-here
 ```
 
 ```
