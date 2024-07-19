@@ -1,19 +1,24 @@
 import { makeAutoObservable } from "mobx";
 
 class MovieStore {
+  movies = [];
   likedMovies = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  addMovie(movie) {
+  setMovies(movies) {
+    this.movies = movies;
+  }
+
+  likeMovie(movie) {
     if (!this.isMovieLiked(movie.imdbID)) {
       this.likedMovies.push(movie);
     }
   }
 
-  removeMovie(movie) {
+  unlikeMovie(movie) {
     const movieId = movie.imdbID;
     if (this.isMovieLiked(movieId)) {
       this.likedMovies = this.likedMovies.filter((m) => m.imdbID !== movieId);

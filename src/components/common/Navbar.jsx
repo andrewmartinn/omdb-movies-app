@@ -43,6 +43,7 @@ const Navbar = observer(() => {
             fontWeight={"bold"}
             to="/about"
             _hover={{ textDecoration: "none" }}
+            display={{ base: "none", md: "block", lg: "block" }}
           >
             About
           </ChakraLink>
@@ -50,19 +51,25 @@ const Navbar = observer(() => {
             <Button as={Link} to={"/likes"} size={"md"}>
               <FaHeart size={"16px"} />
             </Button>
-            <Circle
-              position={"absolute"}
-              top={"-1"}
-              right={"-1"}
-              size="20px"
-              fontSize={"13px"}
-              bg="tomato"
-              color="white"
-            >
-              <Center>{movieStore.getLikedMoviesCount()}</Center>
-            </Circle>
+            {movieStore.getLikedMoviesCount() > 0 && (
+              <Circle
+                position={"absolute"}
+                top={"-1"}
+                right={"-1"}
+                size="20px"
+                fontSize={"13px"}
+                bg="tomato"
+                color="white"
+              >
+                <Center>{movieStore.getLikedMoviesCount()}</Center>
+              </Circle>
+            )}
           </Box>
-          <Flex alignItems={"center"} gap={"1rem"}>
+          <Flex
+            alignItems={"center"}
+            gap={"1rem"}
+            display={{ base: "none", md: "flex", lg: "flex" }}
+          >
             <MoonIcon />
             <Switch onChange={toggleColorMode} />
             <SunIcon />

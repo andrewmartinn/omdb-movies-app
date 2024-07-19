@@ -5,14 +5,16 @@ import Pagination from "../components/pagination/Pagination";
 import SearchBar from "../components/search/SearchBar";
 import RootLayout from "../layout/RootLayout";
 import { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
+import movieStore from "../store/movieStore";
 
-const Home = () => {
-  const [movies, setMovies] = useState([]);
+const Home = observer(() => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("Batman");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const [sortOption, setSortOption] = useState("title-asc");
 
   useEffect(() => {
     const fetchMoviesData = async () => {
@@ -29,8 +31,7 @@ const Home = () => {
         if (data.Response === "False") {
           throw new Error(data.Error);
         }
-        console.log(data);
-        setMovies(data.Search);
+        movieStore.setMovies(data.Search);
         setTotalResults(data.totalResults);
         setLoading(false);
       } catch (error) {
@@ -41,6 +42,45 @@ const Home = () => {
 
     fetchMoviesData();
   }, [currentPage, searchTerm]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  const handleSortChange = (option) => {
+    setSortOption(option);
+  };
+
+  const getSortedMovies = (movies) => {
+    const sortedMovies = [...movies];
+
+    switch (sortOption) {
+      case "title-asc":
+        sortedMovies.sort((a, b) => a.Title.localeCompare(b.Title));
+        break;
+      case "title-desc":
+        sortedMovies.sort((a, b) => b.Title.localeCompare(a.Title));
+        break;
+      case "year-asc":
+        sortedMovies.sort((a, b) => {
+          const yearA = parseInt(a.Year.split("-")[0]);
+          const yearB = parseInt(b.Year.split("-")[0]);
+          return yearA - yearB;
+        });
+        break;
+      case "year-desc":
+        sortedMovies.sort((a, b) => {
+          const yearA = parseInt(a.Year.split("-")[0]);
+          const yearB = parseInt(b.Year.split("-")[0]);
+          return yearB - yearA;
+        });
+        break;
+      default:
+        break;
+    }
+
+    return sortedMovies;
+  };
 
   return (
     <RootLayout>
@@ -53,9 +93,13 @@ const Home = () => {
           </Text>
         </AbsoluteCenter>
       )}
-      {!loading && !error && movies.length > 0 && (
+      {!loading && !error && movieStore.movies.length > 0 && (
         <>
-          <MoviesGrid movies={movies} />
+          <MoviesGrid
+            movies={getSortedMovies(movieStore.movies)}
+            handleSortChange={handleSortChange}
+            searchTerm={searchTerm}
+          />
           <Pagination
             totalResultsCount={totalResults}
             currentPage={currentPage}
@@ -63,7 +107,7 @@ const Home = () => {
           />
         </>
       )}
-      {!loading && !error && movies.length === 0 && (
+      {!loading && !error && movieStore.movies.length === 0 && (
         <AbsoluteCenter>
           <Text fontWeight={"bold"} fontSize={"xl"}>
             No movies found!
@@ -72,5 +116,5 @@ const Home = () => {
       )}
     </RootLayout>
   );
-};
+});
 export default Home;

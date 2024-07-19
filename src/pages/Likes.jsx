@@ -1,8 +1,16 @@
-import { AbsoluteCenter, Box, Divider, Heading, Text } from "@chakra-ui/react";
+import {
+  AbsoluteCenter,
+  Box,
+  Container,
+  Divider,
+  Grid,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 import RootLayout from "../layout/RootLayout";
-import MoviesGrid from "../components/movies/MoviesGrid";
 import { observer } from "mobx-react-lite";
 import movieStore from "../store/movieStore";
+import MovieCard from "../components/movies/MovieCard";
 
 const Likes = observer(() => {
   return (
@@ -12,7 +20,20 @@ const Likes = observer(() => {
         <Divider />
       </Box>
       {movieStore.getLikedMoviesCount() > 0 ? (
-        <MoviesGrid movies={movieStore.likedMovies} />
+        <Container my={"4rem"} maxWidth={"6xl"} centerContent>
+          <Grid
+            gridTemplateColumns={{
+              base: "repeat(1, 1fr)",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            }}
+            gap={"8"}
+          >
+            {movieStore.likedMovies.map((movie) => (
+              <MovieCard key={movie.imdbID} movie={movie} />
+            ))}
+          </Grid>
+        </Container>
       ) : (
         <AbsoluteCenter>
           <Text fontWeight={"bold"} fontSize={"xl"}>

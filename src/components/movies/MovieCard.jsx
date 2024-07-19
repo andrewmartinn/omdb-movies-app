@@ -13,9 +13,9 @@ import { FaHeart } from "react-icons/fa";
 const MovieCard = observer(({ movie }) => {
   const handleLikeMovie = (movie) => {
     if (movieStore.isMovieLiked(movie.imdbID)) {
-      movieStore.removeMovie(movie);
+      movieStore.unlikeMovie(movie);
     } else {
-      movieStore.addMovie(movie);
+      movieStore.likeMovie(movie);
     }
   };
   return (
