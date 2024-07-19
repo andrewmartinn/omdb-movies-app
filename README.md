@@ -1,8 +1,77 @@
-# React + Vite
+# OMDB Movies App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React Application to showcase movies data from OMDB movies API. Users view information on thier favourite movies. Additonality users can search and like thier favourite movie and keep track of thier liked movies.
 
-Currently, two official plugins are available:
+## Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Vite](https://vitejs.dev/): Fast, opinionated web dev build tool
+- [Chakra UI](https://v2.chakra-ui.com/getting-started): Simple and modular and accessible component library
+- [React Router](https://reactrouter.com/): Declarative routing for React applications
+- [React Icons](https://react-icons.github.io/react-icons/):A library containing popular icons for React projects, used for displaying various icons throughout the application.
+- [Framer Motion](https://www.framer.com/motion/introduction/): Animation library for React
+- [OMDB API](https://www.omdbapi.com/): Official OMDB API provides information related to movies
+
+## Project Features
+
+- **Display Movies:** Display movie results from API endpoint.
+- **Search Functionality:** Search for your favourite movies using keywords like movie title.
+- **Favorite Movies:** Ability to mark and save favorite movies.
+- **Dark/Light Mode Toggle:** Ability to toggle between dark and light theme modes.
+- **Sorting Movies:** Sorting movies results according to thier release year or title.
+
+## Project Outcomes
+
+- **Responsive Design:** Ensured the application UI is consistent and responsive across different screen sizes.
+
+- **Third-Party API Integration:** Successfully interacted with the official OMDB API to fetch and display movies data dynamically based on user queries and preferences.
+
+- **MobX State Management:** Utilized MobX store to manage global application state efficiently. This included managing movies data and liked movie states.
+
+- **Sort Functionality:** Implemented movies sort functionality where the users can view sorted results by ascending or descending order according to movie title or release year. The sort functionlity is pagination aware so the results are persisted across page changes.
+
+## Project Setup
+
+This project was bootstrapped with [Vite](https://vitejs.dev/guide/)
+
+To get started you need to:
+
+- Clone the project
+- Install listed dependencies
+- Run available scripts
+- Create a env file
+
+### Install dependencies
+
+```
+yarn install
+```
+
+### Create an enviroment file to store GIPHY API Key and base API url
+
+```
+VITE_APP_OMDB_API_KEY=your-api-key-here
+```
+
+```
+VITE_APP_API_BASE_URL=http://www.omdbapi.com/
+```
+
+### Run React dev server
+
+```
+yarn dev
+```
+
+### To build for production
+
+```
+yarn build
+```
+
+## Deployment
+
+To deploy this project run
+
+```
+yarn run deploy
+```
